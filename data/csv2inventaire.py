@@ -24,9 +24,6 @@ def process(nomCSV):
     return res
             
             
-
-            
-        
 res = process('expo.csv')
 
 with open("inventaire.json","w") as f : 

@@ -1,0 +1,29 @@
+{
+  "peintres" : {},
+  "tableaux" : {
+      "MAN01" : ["MANET","le buveur d'absinthe", 1859, 180,105,["portrait"]],
+      "MAN02" : ["MANET","la chanteuse de rue",1862,171,106,["portrait"]],
+      "MAN03" : ["MANET","Olympia", 1863, 130,190,["portrait","nu"]],
+      "MAN04" : ["MANET","Le déjeuner sur l'herbe",1863,208,264,["portrait","nu"]],
+      "MAN05" : ["MANET","Le balcon",1869,170,124,["spectacle"]], 
+      "MAN06" : ["MANET","Le fifre",1866,161,97,["portrait"]],    
+      "MAN07" : ["MANET","Un bar aux folies Bergère",1882,96,130,["spectacle"]],
+      "MAN08" : ["MANET","Argenteuil",1874,149,115,["paysage"]],
+      "CAI01" : ["CAILLEBOTTE","Le déjeuner",1876,52,75,["quotidien"]],
+      "CAI02" : ["CAILLEBOTTE","Le pont de l'Europe",1876,126,181,["paysage"]],
+      "CAI03" : ["CAILLEBOTTE","Rue de Paris, temps de pluie",1877,212,276,["paysage"]],
+      "CAI04" : ["CAILLEBOTTE","La partie de bateau",1878,90,117,["nautique"]],
+      "CAI05" : ["CAILLEBOTTE","Périssoires sur l'Yerre",1877,104,156,["nautique"]],
+      "CAI06" : ["CAILLEBOTTE","Périssoires",1878,155,108,["nautique"]],
+      "CAI07" : ["CAILLEBOTTE","Dans un café",1880, 155,155,["quotidien"]],
+      "MON01":  ["MONET","la vague verte",1865,49,65,["nautique"]],
+      "MON02":  ["MONET","Les promeneurs",1865,93,69,["quotidien"]],
+      "MON03":  ["MONET","La Femme à la robe verte",1866,231,151,["portrait"]],
+      "MON04":  ["MONET","le déjeuner sur l'herbe",1866,60,74,["repas"]],
+      "MON05":  ["MONET","Femmes au jardin",1867,255,205,["quotidien"]],
+      "MON06":  ["MONET","Impression, soleil levant",1872,48,63,["paysage"]],
+      "MON07":  ["MONET","Champ de coquelicots",1873,50,65,["paysage"]] ,                               
+      "MON08":  ["MONET","femme à l'ombrelle",1875,100,81,["portrait"]] ,  
+      "MON09":  ["MONET","La japonaise",1876,232,142,["portrait"]]  
+      }
+}

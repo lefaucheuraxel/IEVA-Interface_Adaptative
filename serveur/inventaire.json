@@ -1,0 +1,154 @@
+{"peintres": ["Monet","Morisot","Caillebotte","Degas","Cézanne","Bazille","Cassat","Pissarro","Renoir","Seurat","Manet","Sisley"],
+"tableaux": {
+ "BAZ02": ["BAZ02","Bazille","Scène d’été","1869", 156, 158, ["campagne","loisir","social","P4","Bazille"]] ,
+
+ "BAZ03": ["BAZ03","Bazille","La robe rose","1864", 147, 110, ["eau","sport","social","Bazille"]] ,
+
+ "BAZ04": ["BAZ04","Bazille","Les remparts d’Aigues-Mortes","1867", 60, 100, ["ville","eau","promenade","Bazille"]] ,
+
+ "BAZ05": ["BAZ05","Bazille","Négresse aux pivoines, printemps","1870", 60, 75, ["service","habitation","Bazille"]] ,
+
+ "BAZ06": ["BAZ06","Bazille","Etude du nu","1864", 70, 190, ["Bazille"]] ,
+
+ "CAI01": ["CAI01","Caillebotte","Paysage à la voie de chemin de fer","1873", 81, 116, ["campagne","industrie","Caillebotte"]] ,
+
+ "CAI02": ["CAI02","Caillebotte","Le boulevard vu d’en haut","1860", 65, 54, ["rue","Caillebotte"]] ,
+
+ "CAI03": ["CAI03","Caillebotte","Le pont de l’Europe","1876", 124, 180, ["rue","promenade","Caillebotte"]] ,
+
+ "CAI04": ["CAI04","Caillebotte","Marguerite","1892", 65, 54, ["ville","famille","Caillebotte"]] ,
+
+ "CAI05": ["CAI05","Caillebotte","Régates à Argenteuil","1893", 157, 117, ["eau","sport","Caillebotte"]] ,
+
+ "CAI06": ["CAI06","Caillebotte","Le déjeuner","1876", 52, 75, ["repas","famille","habitation","Caillebotte"]] ,
+
+ "CAI07": ["CAI07","Caillebotte","Les périssoires","1878", 155, 108, ["eau","promenade","Caillebotte"]] ,
+
+ "CAI08": ["CAI08","Caillebotte","Dans un café","1880", 155, 155, ["salle","social","Caillebotte"]] ,
+
+ "CAI09": ["CAI09","Caillebotte","Rue de Paris, temps de pluie","1877", 212, 276, ["rue","promenade","Caillebotte"]] ,
+
+ "CAS01": ["CAS01","Cassat","Offrant le panal au torero","1873", 100, 85, ["spectacle","social","Cassat"]] ,
+
+ "CAS02": ["CAS02","Cassat","Femme au collier de perles dans une loge","1879", 81, 59, ["spectacle","social","salle","Cassat"]] ,
+
+ "CAS03": ["CAS03","Cassat","Femme lisant au jardin","1879", 89, 65, ["campagne","loisir","Cassat"]] ,
+
+ "CAS04": ["CAS04","Cassat","La lettre","1891", 34, 22, ["quotidien","habitation","famille", "social","Cassat"]] ,
+
+ "CAS06": ["CAS06","Cassat","Petit déjeuner au lit","1897", 58, 73, ["habitation","famille","P2","Cassat"]] ,
+
+ "CAS07": ["CAS07","Cassat","Jeune mère cousant","1900", 92, 73, ["entretien","famille","habitation","Cassat"]] ,
+
+ "CEZ02": ["CEZ02","Cézanne","Montagne Sainte-Victoire","1890", 60, 82, ["campagne","promenade","Cézanne"]] ,
+
+ "CEZ03": ["CEZ03","Cézanne","Le Golfe de Marseille vue de l’Estaque","1879", 58, 72, ["côte","promenade","Cézanne"]] ,
+
+ "CEZ04": ["CEZ04","Cézanne","Une moderne Olympia","1873", 46, 55, ["habitation","repos","service","Cézanne"]] ,
+
+ "CEZ05": ["CEZ05","Cézanne","Pommes et oranges","1899", 74, 93, ["habitation","repas","Cézanne"]] ,
+
+ "CEZ06": ["CEZ06","Cézanne","La maison du pendu","1873", 55, 66, ["village","promenade","Cézanne"]] ,
+
+ "CEZ07": ["CEZ07","Cézanne","Les joueurs de carte","1890", 47, 56, ["salle","social","Cézanne"]] ,
+
+ "CEZ08": ["CEZ08","Cézanne","Nature morte à la bouilloire","1869", 64, 81, ["repas","habitation","Cézanne"]] ,
+
+ "DEG01": ["DEG01","Degas","Ballet","1876", 58, 32, ["salle","spectacle","Degas"]] ,
+
+ "DEG02": ["DEG02","Degas","Deux danseuses jaunes et roses","1898", 106, 108, ["spectacle","Degas"]] ,
+
+ "DEG03": ["DEG03","Degas","Portrait de monsieur et madame Edouard Manet","1868", 65, 71, ["repos","Degas"]] ,
+
+ "DEG04": ["DEG04","Degas","Portraits à la Bourse","1879", 100, 82, ["salle","commerçant","Degas"]] ,
+
+ "DEG05": ["DEG05","Degas","Repasseuses","1886", 76, 81, ["salle","service","Degas"]] ,
+
+ "DEG06": ["DEG06","Degas","Le défilé","1868", 46, 61, ["ville","sport","spectacle","Degas"]] ,
+
+ "DEG07": ["DEG07","Degas","Dans un café","1876", 92, 68, ["salle","social","Degas"]] ,
+
+ "DEG08": ["DEG08","Degas","Le tub","1886", 60, 83, ["habitation","entretien","Degas"]] ,
+
+ "MAN01": ["MAN01","Manet","Olympia","1863", 130, 192, ["habitation", "repos", "Manet"]] ,
+
+ "MAN02": ["MAN02","Manet","Déjeuner sur l’herbe","1863", 207, 265, ["forêt","repas","social","Manet"]] ,
+
+ "MAN03": ["MAN03","Manet","Le balcon","1869", 170, 124, ["salle","spectacle","Manet"]] ,
+
+ "MAN04": ["MAN04","Manet","Le joueur de fifre","1866", 161, 97, ["spectacle","Manet"]] ,
+
+ "MAN05": ["MAN05","Manet","Le buveur d’absinthe","1859", 180, 105, ["salle","social","Manet"]] ,
+
+ "MAN06": ["MAN06","Manet","Portrait d’Emile Zola","1868", 165, 114, ["P1","Manet"]] ,
+
+ "MAN07": ["MAN07","Manet","Un bar aux Folies Bergères","1882", 96, 130, ["salle","spectacle","service","Manet"]] ,
+
+ "MAN08": ["MAN08","Manet","La chanteuse de rue","1859", 180, 105, ["rue","spectacle","Manet"]] ,
+
+ "MON01": ["MON01","Monet","Les bassin aux nymphéas, harmonie verte","1899", 89, 93, ["promenade","eau","Monet"]] ,
+
+ "MON03": ["MON03","Monet","Femme à l’ombrelle tournée vers la gauche","1886", 131, 88, ["campagne","promenade","Monet"]] ,
+
+ "MON04": ["MON04","Monet","Impression soleil levant","1873", 48, 63, ["port","promenade","Monet"]] ,
+
+ "MON05": ["MON05","Monet","La gare Saint-Lazare","1877", 75, 104, ["ville","industrie","Monet"]] ,
+
+ "MON08": ["MON08","Monet","Champ de coquelicots","1873", 50, 75, ["campagne","famille","promenade","Monet"]] ,
+
+ "MON09": ["MON09","Monet","La japonaise","1876", 232, 142, ["habitation","spectacle","Monet"]] ,
+
+ "MOR01": ["MOR01","Morisot","Pasie cousant dans le jardin de Bougival","1881", 81, 101, ["habitation","entretien","Morisot"]] ,
+
+ "MOR02": ["MOR02","Morisot","Jeune fille près d’une fenêtre","1878", 76, 61, ["habitation","famille","repos","Morisot"]] ,
+
+ "MOR03": ["MOR03","Morisot","Le berceau","1872", 56, 46, ["famille","habitation","repos","Morisot"]] ,
+
+ "MOR04": ["MOR04","Morisot","Femme et enfant au balcon","1872", 60, 50, ["promenade","famille","Morisot"]] ,
+
+ "MOR05": ["MOR05","Morisot","Enfants dans les roses trémières","1881", 50, 42, ["famille","habitation","Morisot"]] ,
+
+ "MOR06": ["MOR06","Morisot","Enfant à la vasque","1886", 73, 92, ["famille","habitation","social","Morisot"]] ,
+
+ "MOR07": ["MOR07","Morisot","Femme en noir / Avant le théâtre","1875", 57, 31, ["spectacle","Morisot"]] ,
+
+ "MOR09": ["MOR09","Morisot","Jardin à Bougival","1884", 48, 55, ["habitation","Morisot"]] ,
+
+ "PIS01": ["PIS01","Pissarro","Quai de la Bourse, Rouen, pluie","1898", 54, 65, ["quai","industrie","Pissaro"]] ,
+
+ "REN01": ["REN01","Renoir","Les Grandes Baigneuses","1887", 115, 170, ["eau","social","Renoir"]] ,
+
+ "REN02": ["REN02","Renoir","Danse à la ville","1883", 180, 90, ["salle","social","Renoir"]] ,
+
+ "REN03": ["REN03","Renoir","Danse à la campagne","1883", 180, 90, ["salle","social","Renoir"]] ,
+
+ "REN04": ["REN04","Renoir","Pont du chemin de fer à Chatou","1881", 54, 65, ["industrie","Renoir"]] ,
+
+ "REN05": ["REN05","Renoir","Bal au moulin de la Galette","1876", 131, 175, ["salle","spectacle","social","Renoir"]] ,
+
+ "REN06": ["REN06","Renoir","Le déjeuner des canotiers","1881", 129, 172, ["salle","repas","social","Renoir"]] ,
+
+ "SEU01": ["SEU01","Seurat","Un dimanche à la Grande Jatte","1886", 207, 308, ["eau","promenade","social","Seurat"]] ,
+
+ "SEU02": ["SEU02","Seurat","Port_en-Bassin, avant-port, marée haute","1888", 67, 82, ["port","promenade","Seurat"]] ,
+
+ "SEU03": ["SEU03","Seurat","Cirque","1891", 185, 152, ["spectacle","social","salle","Seurat"]] ,
+
+ "SEU04": ["SEU04","Seurat","Le chahut","1890", 169, 141, ["spectacle","social","salle","Seurat"]] ,
+
+ "SEU05": ["SEU05","Seurat","Une baignade, Asnière","1884", 201, 300, ["eau","industrie","social","Seurat"]] ,
+
+ "SIS02": ["SIS02","Sisley","L’église de Moret, le soir","1894", 101, 82, ["village","Sisley"]] ,
+
+ "SIS03": ["SIS03","Sisley","L’inondation à Paris-Marly","1876", 60, 81, ["eau","Sisley"]] ,
+
+ "SIS04": ["SIS04","Sisley","Passerelle d’Argenteuil","1872", 39, 60, ["eau","rue","Sisley"]] ,
+
+ "SIS05": ["SIS05","Sisley","Chemin de la Machine, Louvecienne","1873", 54, 73, ["village","promenade","Sisley"]] ,
+
+ "SIS06": ["SIS06","Sisley","Allée de peupliers aux environs de Moret-sur-Loing","1890", 65, 81, ["village","promenade","Sisley"]] ,
+
+ "SIS07": ["SIS07","Sisley","Vue de Villeneuve-la-Garenne","1872", 79, 80, ["village","eau","promenade","Sisley"]] ,
+
+ "SIS08": ["SIS08","Sisley","La vague, Lady’s Cove, Langland Bay","1897", 65, 81, ["côte","Sisley"]]
+  }}

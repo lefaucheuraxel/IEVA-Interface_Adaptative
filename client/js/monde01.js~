@@ -1,0 +1,109 @@
+import {loadJSON} from './load.js' ; 
+import {PRIMS} from './utils/prims.js';
+import {ACTORS} from './ecs/actor.js';
+import {COMPS} from './ecs/component.js';
+
+import {Simu} from './simu.js' ; 
+
+class Monde extends Simu {
+
+	constructor(idCanvas){
+		super(idCanvas) ; 
+        this.prefixe = "./assets/expo/" ;
+
+        const that = this ; 
+
+    		window.addEventListener("click", (evt) => {
+    			const ray = that.camera.getForwardRay();
+    			const hit = that.scene.pickWithRay(ray);
+    			if(hit.pickedMesh){
+    				that.reticule.material.emissiveColor = BABYLON.Color3.Blue();
+    				console.log("CLICK") ; 
+    				console.log("!!! > ",hit.pickedMesh.name) ;
+    				const param = "http://127.0.0.1:5000/click?Nom=" + hit.pickedMesh.name;
+    				loadJSON(param, 
+    					(resultat) => {
+    					
+    					/*
+                            		console.log("Tableaux à créer : ", resultat);
+			                (JSON.parse(resultat)).forEach(element => {
+			
+                                const x = (0.5-Math.random())*50 ; 
+                                const y = 3 ; 
+                                const z = 50*Math.random() ;
+                                const poster = this.createActor(element,ACTORS.actorDyn,{})
+                                                 .add(COMPS.poster,{nom: element, largeur:5, hauteur:3, tableau: this.prefixe+element+".jpg"})
+                                                 .add(COMPS.cartel,{titre:element})
+                                                 .add(COMPS.position,{x,y,z})
+                                                 .add(COMPS.repulsion,{})
+                                                 .add(COMPS.frottement,{})
+						 ; 
+                //const titre  = PRIMS.titre(element+"-titre",{"parent": poster,"texte":element}, that.scene);
+                //titre.isVisible = true ; 
+
+		
+			                });*/
+    						this.evalData(resultat) ; 
+    					});
+            
+            //console.log("!!! > ",hit.pickedMesh.nom) ; 
+    			} else {
+    				that.reticule.material.emissiveColor = BABYLON.Color3.Red();
+    			}   
+    		}); 
+	}
+	
+	build(){
+    		const sph1 = this.createActor("toto", ACTORS.actor,{}).add(COMPS.sphere,{}).add(COMPS.position,{x:5,z:5}) ;
+    		const sph2 = this.createActor("lulu",ACTORS.actor,{}).add(COMPS.sphere,{}).add(COMPS.position,{y:3}) ;
+    		sph2.add(COMPS.anchoredTo, {parent:sph1});	
+    		
+    		 const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(-10,10,-10), this.scene) ; 
+		    PRIMS.prairie("sol",{},this.scene);
+		    //PRIMS.ciel("ciel",{},this.scene);
+
+           //this.requete_tous() ; 
+           this.requete_init();
+	}
+
+ 
+
+    requete_tous(){
+
+        loadJSON("http://127.0.0.1:5000/",(res) => {
+            console.log(">>??", res) ;
+
+			(JSON.parse(res)).forEach(element => {
+			
+                const x = (0.5-Math.random())*50 ; 
+                const y = 3 ; 
+                const z = 50*Math.random() ;
+                const poster = this.createActor(element,ACTORS.actor,{})
+                                                 .add(COMPS.poster,{nom: element, largeur:5, hauteur:3, tableau: this.prefixe+element+".jpg"})
+                                                 //.add(COMPS.cartel,{titre:element})
+                                                 .add(COMPS.position,{x,y,z});
+ 
+		
+			});
+        })
+    }
+
+    requete_init(){
+       loadJSON("http://127.0.0.1:5000/init",(res) => {
+            console.log(">>??", res) ;
+
+            const data = JSON.parse(res) ; 
+
+            console.log("DATA JSON = ",data) ; 
+
+            this.evalData(data) ; 
+ 
+        })
+    }
+
+}
+
+export {Monde} ; 
+
+
+

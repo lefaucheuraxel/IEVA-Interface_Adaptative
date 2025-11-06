@@ -324,23 +324,54 @@ def onSalle():
   # res contient les tableaux (instances de la classe Tableau) à placer dans le musée
   res = []
 
-  # trouver les tableau de plus grande interet à partir du graphe
-
-
-  # objetInteret est une liste d'instances de la classe Objet fille de la classe Noeud
-  # Le point commun entre les instances de la classe Noeud et de la classe Tableau : les attributs "nom" et "cle"
-  
+  # 1. Trouver les tableaux avec le plus fort intérêt (ceux qui ont été cliqués)
   objetsInteret = musee.graphe.calculerObjetsLesPlusInteressants()
+  
+  # 2. Identifier les parents (tags/concepts) les plus intéressants
+  # basés sur les tableaux qui ont le plus d'intérêt
+  parents_scores = {}
+  
+  print("=== Analyse des tableaux les plus intéressants ===")
+  for obj in objetsInteret[:5]:  # Prendre les 5 tableaux les plus intéressants
+    if obj.interet > 1.0:  # Seulement ceux qui ont été cliqués (intérêt > valeur initiale)
+      print(f"Tableau intéressant: {obj.nom}, intérêt: {obj.interet}")
+      for parent in obj.consulterParents():
+        print(f"  - Parent: {parent.nom}, intérêt: {parent.consulterInteret()}")
+        if parent.nom not in parents_scores:
+          parents_scores[parent.nom] = 0
+        parents_scores[parent.nom] += parent.consulterInteret()
+  
+  print(f"\n=== Scores des concepts/tags ===")
+  for concept, score in sorted(parents_scores.items(), key=lambda x: x[1], reverse=True):
+    print(f"{concept}: {score}")
+  
+  # 3. Calculer un score pour chaque tableau restant basé sur ses parents
+  tableaux_scores = []
+  for tab in musee.tableaux.values():
+    if tab.dejavu == 0:  # Seulement les tableaux non encore placés
+      obj = musee.graphe.obtenirNoeudConnaissantNom(tab.cle)
+      if obj:
+        score = 0
+        parents_detail = {}
+        for parent in obj.consulterParents():
+          if parent.nom in parents_scores:
+            score += parents_scores[parent.nom]
+            parents_detail[parent.nom] = parents_scores[parent.nom]
+        tableaux_scores.append((tab, score, obj.interet, parents_detail))
+  
+  # 4. Trier les tableaux par score (basé sur les parents) puis par intérêt propre
+  tableaux_scores.sort(key=lambda x: (x[1], x[2]), reverse=True)
+  
+  print(f"\n=== Tableaux recommandés ===")
+  for tab, score_parents, interet_propre, parents_detail in tableaux_scores[:10]:
+    print(f"{tab.cle}:")
+    for parent_nom, parent_score in sorted(parents_detail.items(), key=lambda x: x[1], reverse=True):
+      print(f"  {parent_nom}: {parent_score}")
+  
+  # 5. Sélectionner les tableaux à placer
+  res = [tab for tab, _, _, _ in tableaux_scores]
 
-  # ne garder que les objets intéressants non encore placés 
-  print("objets les plus interessantes restantes : ")
-  for obj in objetsInteret:
-    for tab in musee.tableaux.values():
-      if (obj.nom == tab.cle and tab.dejavu == 0):
-        print("nome : ",obj.nom,"\tinteret : ",obj.interet)
-        res.append(tab)
-
-  print("Paintings left : ",len(res))
+  print(f"\nPaintings left : {len(res)}")
 
   # ================================================================================================================
   
@@ -395,18 +426,17 @@ def onClick():
 
             musee.graphe.asynchrone(obj)
 
-            # for p in obj.consulterParents():
-            #   p.ajouterInteret(1.0)
-            #   print(p.nom,":",p.consulterInteret())
+            # Augmenter l'intérêt du tableau cliqué
+            obj.ajouterInteret(1.0)
+            print("Tableau ",obj.nom," intérêt:",obj.consulterInteret())
+
+            for p in obj.consulterParents():
+              p.ajouterInteret(1.0)
+              print(p.nom,":",p.consulterInteret())
 
         return jsonify([])
     else : 
         return jsonify([])
-
-
-
-
-
 
 if __name__ == "__main__" : 
     app.run(debug=True)

@@ -35,7 +35,7 @@ class Noeud :
     if(len(self.consulterParents()) == 0):
       return
     for t in self.consulterParents():
-      t.ajouterInteret(dInteret/self.niveau)
+      t.ajouterInteret(dInteret/t.niveau)
 
   def consulterInteret(self):
     return self.interet
@@ -49,7 +49,7 @@ class Noeud :
     else:
       l = [noeud.calculNiveau() for noeud in self.enfants]
       self.niveau = 1 + max(l)
-     # print(self.niveau)
+      print(self.niveau)
       return self.niveau
       
 
@@ -89,8 +89,8 @@ class Graphe :
   def calculerInteretObjet(self, o):
     interet = 0
 
-    interet = random.random()
-
+    interet = o.consulterInteret()
+    print("INTERET : ", interet," | ", o.nom)
     return interet
 
   # Obtenir une référence sur un noeud connaissant son nom

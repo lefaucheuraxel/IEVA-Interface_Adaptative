@@ -32,10 +32,14 @@ class Noeud :
     if(self.nom =="root"):
       return
     self.interet += dInteret
-    if(len(self.consulterParents()) == 0):
+    parents = self.consulterParents()
+    if(len(parents) == 0):
       return
-    for t in self.consulterParents():
-      t.ajouterInteret(dInteret/t.niveau)
+    # Diviser l'intérêt par le nombre de parents pour éviter la sur-pondération
+    # des concepts qui ont beaucoup d'enfants
+    dInteretParent = dInteret / len(parents)
+    for parent in parents:
+      parent.ajouterInteret(dInteretParent)
 
   def consulterInteret(self):
     return self.interet
@@ -84,14 +88,19 @@ class Graphe :
       return resultat[:n]
  
   # Méthode qui calcule l'intérêt d'un objet o
-  # A modifier selon la méthode utilisée
-
+  # L'intérêt d'un objet = somme des intérêts de ses parents (tags/concepts) + intérêt propre
   def calculerInteretObjet(self, o):
-    interet = 0
-
-    interet = o.consulterInteret()
-    print("INTERET : ", interet," | ", o.nom)
-    return interet
+    # Intérêt propre de l'objet (si cliqué directement)
+    interet_propre = o.consulterInteret()
+    
+    # Somme des intérêts de tous les parents (tags/concepts)
+    interet_parents = sum([p.consulterInteret() for p in o.consulterParents()])
+    
+    # Score total
+    interet_total = interet_propre + interet_parents
+    
+    print("INTERET : ", interet_total," (propre:", interet_propre, "+ parents:", interet_parents, ") | ", o.nom)
+    return interet_total
 
   # Obtenir une référence sur un noeud connaissant son nom
   # ------------------------------------------------------

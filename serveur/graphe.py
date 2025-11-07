@@ -329,7 +329,7 @@ class Graphe :
     l = [noeud.interet for noeud in self.noeuds.values()]
     interetMax = max(l)
     for noeud in self.noeuds.values():
-      noeud.interet = noeud.interet / doiMax
+      noeud.interet = noeud.interet / interetMax
       
   def calculUpInteret(self):
     pass

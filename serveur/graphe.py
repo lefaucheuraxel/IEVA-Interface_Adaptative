@@ -237,8 +237,88 @@ class Graphe :
 
     
 
-  def synchrone(self):
-    print("SYNCHRONE")
+  def synchrone(self, sigma=0.05):
+    """
+    Nivelle progressivement les intérêts vers la moyenne pour simuler l'émoussement.
+    Les tags avec un intérêt élevé perdent de l'intérêt, ceux avec un intérêt faible en gagnent.
+    
+    Paramètres:
+    - sigma: paramètre ∈ [0,1] qui contrôle l'intensité du nivellement
+    
+    Principe:
+    1. Calculer I_avg = moyenne des intérêts de tous les tags
+    2. Collecter σ*(I(w) - I_avg) sur les tags où I(w) > I_avg
+    3. Redistribuer uniformément aux tags où I(w) < I_avg
+    
+    Retourne:
+    - Dictionnaire avec les statistiques du nivellement
+    """
+    # Ks : ensemble de tous les tags (niveau 1 du graphe)
+    Ks = self.consulterTags()
+    
+    if len(Ks) == 0:
+      return {"status": "no_tags", "message": "Aucun tag à niveler"}
+    
+    # 1. Calculer I_avg : intérêt moyen de tous les tags
+    I_avg = sum([tag.consulterInteret() for tag in Ks]) / len(Ks)
+    
+    # 2. Identifier les tags au-dessus et en-dessous de la moyenne
+    tags_au_dessus = [tag for tag in Ks if tag.consulterInteret() > I_avg]
+    tags_en_dessous = [tag for tag in Ks if tag.consulterInteret() < I_avg]
+    
+    # Si tous les tags ont le même intérêt, rien à faire
+    if len(tags_au_dessus) == 0 or len(tags_en_dessous) == 0:
+      return {
+        "status": "equilibre",
+        "message": "Tous les tags ont un intérêt similaire",
+        "I_avg": round(I_avg, 4),
+        "nb_tags": len(Ks)
+      }
+    
+    # 3. Collecter l'intérêt des tags au-dessus de la moyenne
+    interet_collecte = 0
+    tags_modifies_haut = []
+    for tag in tags_au_dessus:
+      interet_avant = tag.consulterInteret()
+      quantite = sigma * (interet_avant - I_avg)
+      interet_collecte += quantite
+      tag.interet -= quantite  # Retirer l'intérêt
+      tags_modifies_haut.append({
+        "nom": tag.nom,
+        "avant": round(interet_avant, 4),
+        "apres": round(tag.consulterInteret(), 4),
+        "variation": round(-quantite, 4)
+      })
+    
+    # 4. Redistribuer uniformément aux tags en-dessous de la moyenne
+    interet_par_tag = 0
+    tags_modifies_bas = []
+    if len(tags_en_dessous) > 0:
+      interet_par_tag = interet_collecte / len(tags_en_dessous)
+      for tag in tags_en_dessous:
+        interet_avant = tag.consulterInteret()
+        tag.interet += interet_par_tag
+        tags_modifies_bas.append({
+          "nom": tag.nom,
+          "avant": round(interet_avant, 4),
+          "apres": round(tag.consulterInteret(), 4),
+          "variation": round(interet_par_tag, 4)
+        })
+    
+    # Retourner les statistiques
+    return {
+      "status": "success",
+      "message": "Nivellement effectué",
+      "sigma": sigma,
+      "I_avg": round(I_avg, 4),
+      "interet_collecte": round(interet_collecte, 4),
+      "interet_par_tag_bas": round(interet_par_tag, 4),
+      "nb_tags_total": len(Ks),
+      "nb_tags_au_dessus": len(tags_au_dessus),
+      "nb_tags_en_dessous": len(tags_en_dessous),
+      "tags_diminues": tags_modifies_haut[:5],  # Top 5 pour ne pas surcharger
+      "tags_augmentes": tags_modifies_bas[:5]   # Top 5 pour ne pas surcharger
+    }
 
       
   def calculInteretMax(self):

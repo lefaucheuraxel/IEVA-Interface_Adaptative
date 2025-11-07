@@ -266,9 +266,40 @@ def assets():
 @app.route('/tictac')
 def onTicTac():
   t = request.args.get("Time",default=0,type=float)
-  #print("tictac ",t)
-  musee.graphe.synchrone()
-  return jsonify([])
+  sigma = request.args.get("Sigma",default=0.05,type=float)
+  
+  print(f"\n{'='*60}")
+  print(f"TIC-TAC à t={t:.2f}s (sigma={sigma})")
+  print(f"{'='*60}")
+  
+  # Appeler la méthode synchrone pour niveller progressivement les intérêts
+  # sigma contrôle la vitesse de nivellement (0.05 = 5% par tick)
+  resultat = musee.graphe.synchrone(sigma=sigma)
+  
+  # Afficher un résumé dans la console
+  if resultat:
+    print(f"Status: {resultat.get('message', 'N/A')}")
+    if resultat.get('status') == 'success':
+      print(f"Intérêt moyen: {resultat.get('I_avg', 0)}")
+      print(f"Intérêt collecté: {resultat.get('interet_collecte', 0)}")
+      print(f"Tags au-dessus de la moyenne: {resultat.get('nb_tags_au_dessus', 0)}")
+      print(f"Tags en-dessous de la moyenne: {resultat.get('nb_tags_en_dessous', 0)}")
+      
+      # Afficher quelques tags modifiés
+      if resultat.get('tags_diminues'):
+        print("\nTags qui ont perdu de l'intérêt:")
+        for tag in resultat['tags_diminues'][:3]:
+          print(f"  - {tag['nom']}: {tag['avant']} → {tag['apres']} ({tag['variation']:+.4f})")
+      
+      if resultat.get('tags_augmentes'):
+        print("\nTags qui ont gagné de l'intérêt:")
+        for tag in resultat['tags_augmentes'][:3]:
+          print(f"  - {tag['nom']}: {tag['avant']} → {tag['apres']} ({tag['variation']:+.4f})")
+  
+  print(f"{'='*60}\n")
+  
+  # Retourner les statistiques au client
+  return jsonify(resultat if resultat else {})
 
 
 @app.route('/init')

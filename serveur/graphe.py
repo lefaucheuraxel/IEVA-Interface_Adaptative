@@ -332,7 +332,54 @@ class Graphe :
       noeud.interet = noeud.interet / interetMax
       
   def calculUpInteret(self):
-    pass
+    """
+    Propagation bottom-up : propage l'intérêt des objets (niveau 0) vers les concepts abstraits.
+    Parcourt les niveaux du bas vers le haut.
+    """
+    # Parcourir du niveau 0 (objets) vers les niveaux supérieurs
+    for niveau_idx in range(len(self.niveaux)):
+      noeuds_niveau = self.niveaux[niveau_idx]
+      for noeud in noeuds_niveau:
+        if noeud.nom == "root":
+          continue
         
-  def calculDownInteret(self):
-    pass
+        # Calculer l'intérêt basé sur les enfants (si c'est un concept)
+        if len(noeud.enfants) > 0:
+          # L'intérêt d'un concept = moyenne des intérêts de ses enfants
+          interet_enfants = sum([enfant.consulterInteret() for enfant in noeud.enfants])
+          noeud.interet = interet_enfants / len(noeud.enfants)
+        
+  def calculDownInteret(self, objet_source=None):
+    """
+    Propagation top-down : redistribue l'intérêt des concepts abstraits vers les objets.
+    Parcourt les niveaux du haut vers le bas.
+    
+    Paramètres:
+    - objet_source: l'objet qui a été cliqué (pour ne pas le favoriser doublement)
+    """
+    # Parcourir du niveau le plus haut vers le niveau 0 (objets)
+    for niveau_idx in range(len(self.niveaux) - 1, 0, -1):
+      noeuds_niveau = self.niveaux[niveau_idx]
+      
+      for noeud in noeuds_niveau:
+        if noeud.nom == "root" or len(noeud.enfants) == 0:
+          continue
+        
+        # Calculer la part d'intérêt à redistribuer à chaque enfant
+        # On redistribue une fraction de l'intérêt du parent
+        interet_parent = noeud.consulterInteret()
+        nb_enfants = len(noeud.enfants)
+        
+        # Facteur de redistribution (ajustable)
+        # Plus il est élevé, plus la propagation est forte
+        facteur_redistribution = 0.1
+        
+        interet_par_enfant = (interet_parent * facteur_redistribution) / nb_enfants
+        
+        for enfant in noeud.enfants:
+          # Ne pas favoriser doublement l'objet source
+          if objet_source and enfant.nom == objet_source.nom:
+            continue
+          
+          # Ajouter l'intérêt redistribué (sans propager récursivement)
+          enfant.interet += interet_par_enfant

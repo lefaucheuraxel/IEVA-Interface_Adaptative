@@ -445,13 +445,25 @@ def onClick():
             print(f"Tags associés: {[p.nom for p in obj.consulterParents()]}")
             print("="*60)
 
-            # Utiliser la méthode asynchrone pour redistribuer l'intérêt
-            # tau contrôle l'intensité de la redistribution (0.1 = 10% de redistribution)
-            musee.graphe.asynchrone(obj, tau=0.1)
-            
-            # Augmenter aussi l'intérêt propre du tableau cliqué
+            # 1. Augmenter l'intérêt propre du tableau cliqué
             obj.interet += 1.0
             print(f"\nIntérêt propre du tableau {obj.nom}: {obj.consulterInteret()}")
+            
+            # 2. Propagation BOTTOM-UP : de l'objet vers les concepts abstraits
+            print("\n--- Propagation BOTTOM-UP ---")
+            musee.graphe.calculUpInteret()
+            print("Intérêts propagés vers les concepts parents")
+            
+            # 3. Propagation TOP-DOWN : des concepts abstraits vers les objets similaires
+            print("\n--- Propagation TOP-DOWN ---")
+            musee.graphe.calculDownInteret(objet_source=obj)
+            print("Intérêts redistribués vers les objets similaires")
+            
+            # 4. Méthode asynchrone pour niveler entre les tags
+            print("\n--- Redistribution asynchrone ---")
+            musee.graphe.asynchrone(obj, tau=0.1)
+            
+            print("="*60 + "\n")
 
         return jsonify([])
     else : 

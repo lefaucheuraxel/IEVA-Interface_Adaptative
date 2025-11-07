@@ -409,17 +409,18 @@ def onClick():
 
         for obj in musee.graphe.consulterObjets():
           if(obj.nom == nomObjet):
-            print("ADDING INTEREST TO ",obj.nom, " tags : ", [p.nom for p in obj.consulterParents()])
+            print("\n" + "="*60)
+            print(f"INTERACTION avec le tableau: {obj.nom}")
+            print(f"Tags associés: {[p.nom for p in obj.consulterParents()]}")
+            print("="*60)
 
-            musee.graphe.asynchrone(obj)
-
-            # Augmenter l'intérêt du tableau cliqué (propage automatiquement aux parents)
-            obj.ajouterInteret(1.0)
-            print("Tableau ",obj.nom," intérêt:",obj.consulterInteret())
+            # Utiliser la méthode asynchrone pour redistribuer l'intérêt
+            # tau contrôle l'intensité de la redistribution (0.1 = 10% de redistribution)
+            musee.graphe.asynchrone(obj, tau=0.1)
             
-            # Afficher l'intérêt des parents après propagation
-            for p in obj.consulterParents():
-              print("  Parent",p.nom,":",p.consulterInteret())
+            # Augmenter aussi l'intérêt propre du tableau cliqué
+            obj.interet += 1.0
+            print(f"\nIntérêt propre du tableau {obj.nom}: {obj.consulterInteret()}")
 
         return jsonify([])
     else : 

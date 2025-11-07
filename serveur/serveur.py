@@ -1,6 +1,7 @@
 
 import math
 import random
+import numpy as np
 
 import graphe
 
@@ -425,6 +426,59 @@ def onSalle():
 
   return jsonify(sceneSalle.jsonify())
     
+@app.route('/stats')
+def getStats():
+  """
+  Retourne des statistiques sur l'état actuel du système d'intérêt
+  Utile pour mesurer l'adaptation aux préférences du visiteur
+  """
+  # Récupérer les tags et leurs intérêts
+  tags = musee.graphe.consulterTags()
+  tags_stats = []
+  for tag in tags:
+    tags_stats.append({
+      "nom": tag.nom,
+      "interet": round(tag.consulterInteret(), 4),
+      "nb_enfants": len(tag.enfants)
+    })
+  
+  # Trier par intérêt décroissant
+  tags_stats.sort(key=lambda x: x['interet'], reverse=True)
+  
+  # Récupérer les tableaux les plus recommandés
+  objets_recommandes = musee.graphe.calculerObjetsLesPlusInteressants(10)
+  recommandations = []
+  for obj in objets_recommandes:
+    tableau = musee.tableaux.get(obj.nom)
+    if tableau:
+      recommandations.append({
+        "cle": obj.nom,
+        "nom": tableau.nom,
+        "peintre": tableau.peintre,
+        "tags": tableau.tags,
+        "score": round(musee.graphe.calculerInteretObjet(obj), 4)
+      })
+  
+  # Calculer des statistiques globales
+  tous_interets = [tag.consulterInteret() for tag in tags]
+  interet_moyen = sum(tous_interets) / len(tous_interets) if tous_interets else 0
+  interet_max = max(tous_interets) if tous_interets else 0
+  interet_min = min(tous_interets) if tous_interets else 0
+  
+  stats = {
+    "tags_top10": tags_stats[:10],
+    "recommandations_top10": recommandations,
+    "statistiques_globales": {
+      "nb_tags_total": len(tags),
+      "interet_moyen": round(interet_moyen, 4),
+      "interet_max": round(interet_max, 4),
+      "interet_min": round(interet_min, 4),
+      "ecart_type": round(np.std(tous_interets), 4) if tous_interets else 0
+    }
+  }
+  
+  return jsonify(stats)
+
 @app.route('/click/')
 def onClick():
     global scene

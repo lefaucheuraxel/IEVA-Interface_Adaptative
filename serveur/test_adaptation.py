@@ -16,11 +16,9 @@ Métriques d'adaptation:
 
 import sys
 import json
-import matplotlib.pyplot as plt
-import numpy as np
 
 # Importer les modules du musée
-sys.path.append('/home/axel/Documents/IEVA_Interface_adaptative/IEVA-Interface_Adaptative/serveur')
+sys.path.append('/home/axel/Documents/IEVA-Interface_Adaptative/serveur')
 import graphe
 from serveur import Musee
 
@@ -158,79 +156,48 @@ class TestAdaptation:
         
         return resultats
     
-    def visualiser_resultats(self, resultats_scenarios):
+    def afficher_resultats_console(self, resultats_scenarios):
         """
-        Créer des graphiques pour visualiser l'adaptation
+        Afficher les résultats dans la console sans graphiques
         
         Paramètres:
         - resultats_scenarios: dictionnaire {nom_scenario: resultats}
         """
-        fig, axes = plt.subplots(2, 2, figsize=(15, 10))
-        fig.suptitle("Démonstration de l'adaptation du musée virtuel aux préférences du visiteur", 
-                     fontsize=16, fontweight='bold')
+        print("\n" + "="*80)
+        print("RÉSULTATS DÉTAILLÉS DE L'ADAPTATION")
+        print("="*80)
         
-        # Graphique 1: Évolution du taux de pertinence
-        ax1 = axes[0, 0]
         for nom_scenario, resultats in resultats_scenarios.items():
-            ax1.plot(resultats['iterations'], resultats['taux_pertinence'], 
-                    marker='o', label=nom_scenario, linewidth=2)
-        ax1.set_xlabel('Nombre de clics')
-        ax1.set_ylabel('Taux de pertinence (%)')
-        ax1.set_title('Évolution du taux de pertinence des recommandations')
-        ax1.legend()
-        ax1.grid(True, alpha=0.3)
-        ax1.set_ylim([0, 105])
+            print(f"\n📊 SCÉNARIO: {nom_scenario}")
+            print("-" * 60)
+            
+            # Évolution du taux de pertinence
+            print("Évolution du taux de pertinence:")
+            for i, taux in enumerate(resultats['taux_pertinence']):
+                print(f"  Itération {resultats['iterations'][i]:2d}: {taux:5.1f}%")
+            
+            # Gain total
+            gain = resultats['taux_pertinence'][-1] - resultats['taux_pertinence'][0]
+            print(f"\n🎯 Gain total: +{gain:.1f} points de pourcentage")
+            
+            # Évolution des tags préférés
+            if resultats['interets_tags']:
+                print("\nÉvolution de l'intérêt des tags préférés:")
+                for tag, valeurs in resultats['interets_tags'].items():
+                    evolution = valeurs[-1] - valeurs[0] if len(valeurs) > 1 else 0
+                    print(f"  {tag}: {valeurs[0]:.3f} → {valeurs[-1]:.3f} ({evolution:+.3f})")
         
-        # Graphique 2: Évolution de l'intérêt des tags préférés (premier scénario)
-        ax2 = axes[0, 1]
-        premier_scenario = list(resultats_scenarios.values())[0]
-        for tag, valeurs in premier_scenario['interets_tags'].items():
-            ax2.plot(premier_scenario['iterations'], valeurs, 
-                    marker='s', label=tag, linewidth=2)
-        ax2.set_xlabel('Nombre de clics')
-        ax2.set_ylabel('Intérêt du tag')
-        ax2.set_title(f'Évolution de l\'intérêt des tags - {list(resultats_scenarios.keys())[0]}')
-        ax2.legend()
-        ax2.grid(True, alpha=0.3)
+        # Comparaison entre scénarios
+        print(f"\n" + "="*80)
+        print("COMPARAISON ENTRE SCÉNARIOS")
+        print("="*80)
         
-        # Graphique 3: Comparaison initiale vs finale (premier scénario)
-        ax3 = axes[1, 0]
-        categories = ['Initial', 'Final']
-        taux_initial = premier_scenario['taux_pertinence'][0]
-        taux_final = premier_scenario['taux_pertinence'][-1]
-        bars = ax3.bar(categories, [taux_initial, taux_final], 
-                      color=['#ff7f0e', '#2ca02c'], alpha=0.7, width=0.5)
-        ax3.set_ylabel('Taux de pertinence (%)')
-        ax3.set_title('Comparaison: État initial vs État final')
-        ax3.set_ylim([0, 105])
+        for nom_scenario, resultats in resultats_scenarios.items():
+            gain = resultats['taux_pertinence'][-1] - resultats['taux_pertinence'][0]
+            efficacite = gain / len(resultats['iterations']) if len(resultats['iterations']) > 0 else 0
+            print(f"{nom_scenario:30s}: Gain {gain:+5.1f}% (Efficacité: {efficacite:.2f}%/itération)")
         
-        # Ajouter les valeurs sur les barres
-        for bar in bars:
-            height = bar.get_height()
-            ax3.text(bar.get_x() + bar.get_width()/2., height,
-                    f'{height:.1f}%', ha='center', va='bottom', fontweight='bold')
-        
-        # Graphique 4: Gain d'adaptation par scénario
-        ax4 = axes[1, 1]
-        scenarios_noms = list(resultats_scenarios.keys())
-        gains = [res['taux_pertinence'][-1] - res['taux_pertinence'][0] 
-                for res in resultats_scenarios.values()]
-        colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
-        bars = ax4.barh(scenarios_noms, gains, color=colors[:len(scenarios_noms)], alpha=0.7)
-        ax4.set_xlabel('Gain de pertinence (points de %)')
-        ax4.set_title('Gain d\'adaptation par scénario')
-        ax4.grid(True, alpha=0.3, axis='x')
-        
-        # Ajouter les valeurs
-        for i, bar in enumerate(bars):
-            width = bar.get_width()
-            ax4.text(width, bar.get_y() + bar.get_height()/2.,
-                    f'+{width:.1f}', ha='left', va='center', fontweight='bold')
-        
-        plt.tight_layout()
-        plt.savefig('adaptation_musee_resultats.png', dpi=300, bbox_inches='tight')
-        print("✓ Graphiques sauvegardés dans 'adaptation_musee_resultats.png'")
-        plt.show()
+        print("="*80)
     
     def generer_rapport(self, resultats_scenarios):
         """Générer un rapport textuel des résultats"""
@@ -293,53 +260,51 @@ def main():
     
     test = TestAdaptation()
     
-    # Définir les scénarios de test
-    scenarios = {}
-    
-    # Scénario 1: Amateur de portraits
-    # (À adapter selon les tableaux réellement présents dans votre inventaire)
-    print("\nPréparation des scénarios de test...")
-    print("Note: Adapter les noms de tableaux selon votre inventaire.json")
-    
-    # Exemple de scénarios (à personnaliser)
-    # Vous devez remplacer ces noms par des vrais tableaux de votre collection
-    
-    # Pour trouver les tableaux disponibles:
+    # Afficher les tableaux disponibles pour information
     print("\nTableaux disponibles (premiers 20):")
     tous_tableaux = list(test.musee.tableaux.keys())[:20]
     for i, cle in enumerate(tous_tableaux, 1):
         tab = test.musee.tableaux[cle]
         print(f"  {i}. {cle} - Tags: {tab.tags}")
     
+    # Définir les scénarios de test avec de vrais tableaux
+    scenarios = {}
+    
+    # Scénario 1: Amateur de scènes sociales et spectacles
     print("\n" + "="*80)
-    print("INSTRUCTIONS POUR LANCER LE TEST:")
-    print("="*80)
-    print("1. Examinez la liste des tableaux ci-dessus")
-    print("2. Modifiez le code pour sélectionner des tableaux avec des tags spécifiques")
-    print("3. Créez 2-3 scénarios avec des préférences différentes")
-    print("4. Relancez le script")
+    print("LANCEMENT DES SCÉNARIOS DE TEST")
     print("="*80)
     
-    # Exemple de code à décommenter et adapter:
-    """
-    scenarios['Amateur de portraits'] = test.scenario_visiteur(
-        nom_scenario="Amateur de portraits",
-        tableaux_a_cliquer=['tableau1', 'tableau2', 'tableau3'],  # Remplacer par vrais noms
-        tags_preferes=['portrait', 'visage'],  # Adapter selon vos tags
-        nb_iterations=10
+    scenarios['Amateur de scènes sociales'] = test.scenario_visiteur(
+        nom_scenario="Amateur de scènes sociales et spectacles",
+        tableaux_a_cliquer=['CAS01', 'CAS02', 'REN05', 'SEU03', 'DEG01'],  # Tableaux avec tags 'social', 'spectacle'
+        tags_preferes=['social', 'spectacle', 'salle'],
+        nb_iterations=8
     )
     
+    # Scénario 2: Amateur de paysages et promenades
     scenarios['Amateur de paysages'] = test.scenario_visiteur(
-        nom_scenario="Amateur de paysages",
-        tableaux_a_cliquer=['tableau4', 'tableau5', 'tableau6'],
-        tags_preferes=['paysage', 'nature'],
-        nb_iterations=10
+        nom_scenario="Amateur de paysages et promenades",
+        tableaux_a_cliquer=['MON01', 'MON03', 'CEZ02', 'SIS05', 'SEU01'],  # Tableaux avec tags 'promenade', 'campagne', 'eau'
+        tags_preferes=['promenade', 'campagne', 'eau'],
+        nb_iterations=8
     )
     
-    # Visualiser et générer le rapport
-    test.visualiser_resultats(scenarios)
+    # Scénario 3: Amateur de scènes familiales et domestiques
+    scenarios['Amateur de vie familiale'] = test.scenario_visiteur(
+        nom_scenario="Amateur de scènes familiales et domestiques",
+        tableaux_a_cliquer=['CAI06', 'CAS04', 'MOR03', 'CAS06', 'MOR05'],  # Tableaux avec tags 'famille', 'habitation'
+        tags_preferes=['famille', 'habitation', 'repas'],
+        nb_iterations=8
+    )
+    
+    # Afficher les résultats et générer le rapport
+    print("\n" + "="*80)
+    print("GÉNÉRATION DES RÉSULTATS")
+    print("="*80)
+    
+    test.afficher_resultats_console(scenarios)
     test.generer_rapport(scenarios)
-    """
 
 if __name__ == "__main__":
     main()

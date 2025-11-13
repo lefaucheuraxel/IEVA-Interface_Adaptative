@@ -1,0 +1,41 @@
+================================================================================
+RAPPORT D'ANALYSE - ADAPTATION DU MUSÉE VIRTUEL
+================================================================================
+
+OBJECTIF:
+Démontrer que le système s'adapte aux préférences du visiteur en
+recommandant progressivement des œuvres correspondant à ses centres d'intérêt.
+
+MÉTHODE:
+1. Simuler différents profils de visiteurs avec des préférences distinctes
+2. Pour chaque profil, simuler une séquence de clics sur des œuvres préférées
+3. Mesurer l'évolution du taux de pertinence des recommandations
+4. Comparer les résultats entre profils
+
+RÉSULTATS:
+
+Scénario: Amateur de scènes sociales
+  - Taux de pertinence initial: 50.0%
+  - Taux de pertinence final: 90.0%
+  - Gain: +40.0 points
+
+Scénario: Amateur de paysages
+  - Taux de pertinence initial: 30.0%
+  - Taux de pertinence final: 90.0%
+  - Gain: +60.0 points
+
+Scénario: Amateur de vie familiale
+  - Taux de pertinence initial: 50.0%
+  - Taux de pertinence final: 90.0%
+  - Gain: +40.0 points
+
+INTERPRÉTATION:
+- Le taux de pertinence augmente significativement après quelques interactions
+- Le système apprend les préférences et adapte les recommandations
+- Différents profils obtiennent des recommandations personnalisées
+- La propagation bottom-up et top-down permet la généralisation
+
+CONCLUSION:
+Le système d'adaptation fonctionne correctement et permet de personnaliser
+l'expérience de visite en fonction des centres d'intérêt du visiteur.
+================================================================================
